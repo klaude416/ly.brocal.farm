@@ -1,0 +1,133 @@
+<html>
+<head>
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="/bower_components/moment/min/locales.min.js"></script>
+  <!-- <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+  <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <!-- <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" /> -->
+  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <style>
+  ul.list-group:after {
+    clear: both;
+    display: block;
+    content: "";
+  }
+
+  .list-group-item {
+    float: left;
+  }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="btn_market" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn_market" id="ul_markets">
+              <li><a href="#" data-ccode="330101">청주도매시장</a></li>
+              <li><a href="#" data-ccode="350101">전주도매시장</a></li>
+              <li><a href="#" data-ccode="350301">익산도매시장</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class='col-sm-6'>
+          <button type="button" class="btn btn-default btn-md" id="btn_search">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 찾기
+          </button>
+        </div>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                  locale: 'ko',
+                  format: 'YYYY/MM/DD(dd)',
+                  date: '{{ date }}'
+                });
+
+                var ccode = '{{ccode | default("330101")}}';
+                var cname = $('#ul_markets li a[data-ccode=' + ccode + ']').text();
+                $('#btn_market').html(cname + ' <span class="caret"></span>');
+                $('#btn_market').val(ccode);
+
+                $(".dropdown-menu li a").click(function(){
+                  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+                  $(this).parents(".dropdown").find('.btn').val($(this).data('ccode'));
+                });
+
+                $('#btn_search').on('click', function(){
+                  var ccode = $('#btn_market').val();
+                  var date = $('#datetimepicker1').data("DateTimePicker").date();
+                  if (date) {
+                    date = date.format('YYYYMMDD');
+
+                    // console.log(ccode, date)
+                    location.href = '/?date=' + date + '&ccode=' + ccode;
+                  }
+
+                });
+            });
+        </script>
+    </div>
+  </div>
+  <h3>총 {{total}}건</h3>
+  <table class="table table-striped">
+    <tr>
+      <th>상호</th>
+      <th>품종</th>
+      <th>규격</th>
+      <th>등급</th>
+      <th>상한가</th>
+    </tr>
+  {% for price in prices %}
+    <tr>
+      <td>{{price.coname}}</td>
+      <td>{{price.sclassname}}</td>
+      <td>{{price.unitname}}</td>
+      <td>{{price.gradename}}</td>
+      <td>{{price.maxprice}}</td>
+    </tr>
+  {% endfor %}
+  </table>
+  <!-- <nav aria-label="Page navigation">
+    <ul class="pagination pagination-lg center">
+      <li>
+        <a href="#" aria-label="이전">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="다음">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav> -->
+</body>
+<html>
