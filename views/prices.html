@@ -25,6 +25,7 @@
   .list-group-item {
     float: left;
   }
+
   </style>
 </head>
 <body>
@@ -32,7 +33,7 @@
     <div class="row">
         <div class='col-sm-3'>
             <div class="form-group">
-                <div class='input-group date' id='datetimepicker1'>
+                <div class='input-group input-group-lg date' id='datetimepicker1'>
                     <input type='text' class="form-control" />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
@@ -42,7 +43,7 @@
         </div>
         <div class='col-sm-3'>
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="btn_market" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <button class="btn btn-default btn-lg dropdown-toggle" type="button" id="btn_market" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="btn_market" id="ul_markets">
@@ -53,46 +54,14 @@
           </div>
         </div>
         <div class='col-sm-6'>
-          <button type="button" class="btn btn-default btn-md" id="btn_search">
+          <button type="button" class="btn btn-default btn-lg" id="btn_search">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span> 찾기
           </button>
         </div>
-
-        <script type="text/javascript">
-            $(function () {
-                $('#datetimepicker1').datetimepicker({
-                  locale: 'ko',
-                  format: 'YYYY/MM/DD(dd)',
-                  date: '{{ date }}'
-                });
-
-                var ccode = '{{ccode | default("330101")}}';
-                var cname = $('#ul_markets li a[data-ccode=' + ccode + ']').text();
-                $('#btn_market').html(cname + ' <span class="caret"></span>');
-                $('#btn_market').val(ccode);
-
-                $(".dropdown-menu li a").click(function(){
-                  $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
-                  $(this).parents(".dropdown").find('.btn').val($(this).data('ccode'));
-                });
-
-                $('#btn_search').on('click', function(){
-                  var ccode = $('#btn_market').val();
-                  var date = $('#datetimepicker1').data("DateTimePicker").date();
-                  if (date) {
-                    date = date.format('YYYYMMDD');
-
-                    // console.log(ccode, date)
-                    location.href = '/?date=' + date + '&ccode=' + ccode;
-                  }
-
-                });
-            });
-        </script>
     </div>
   </div>
-  <h3>총 {{total}}건</h3>
-  <table class="table table-striped">
+  <div class="container-fluid"><h3>총 {{total}}건</h3></div>
+  <table class="table table-striped h1">
     <tr>
       <th>상호</th>
       <th>품종</th>
@@ -129,5 +98,36 @@
       </li>
     </ul>
   </nav> -->
+  <script type="text/javascript">
+      $(function () {
+          $('#datetimepicker1').datetimepicker({
+            locale: 'ko',
+            format: 'YYYY/MM/DD(dd)',
+            date: '{{ date }}'
+          });
+
+          var ccode = '{{ccode | default("330101")}}';
+          var cname = $('#ul_markets li a[data-ccode=' + ccode + ']').text();
+          $('#btn_market').html(cname + ' <span class="caret"></span>');
+          $('#btn_market').val(ccode);
+
+          $(".dropdown-menu li a").click(function(){
+            $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+            $(this).parents(".dropdown").find('.btn').val($(this).data('ccode'));
+          });
+
+          $('#btn_search').on('click', function(){
+            var ccode = $('#btn_market').val();
+            var date = $('#datetimepicker1').data("DateTimePicker").date();
+            if (date) {
+              date = date.format('YYYYMMDD');
+
+              // console.log(ccode, date)
+              location.href = '/?date=' + date + '&ccode=' + ccode;
+            }
+
+          });
+      });
+  </script>
 </body>
 <html>
