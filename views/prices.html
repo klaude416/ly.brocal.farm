@@ -51,9 +51,10 @@
               <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="btn_market" id="ul_markets">
-              <li><a href="#" data-ccode="330101">청주도매시장</a></li>
+              <li><a href="#" data-ccode="330201">충주도매시장</a></li>
               <li><a href="#" data-ccode="350101">전주도매시장</a></li>
               <li><a href="#" data-ccode="350301">익산도매시장</a></li>
+              <li><a href="#" data-ccode="330101">청주도매시장</a></li>
             </ul>
           </div>
         </div>
@@ -110,7 +111,7 @@
             date: '{{ date }}'
           });
 
-          var ccode = '{{ccode | default("330101")}}';
+          var ccode = '{{ccode | default("330201")}}';
           var cname = $('#ul_markets li a[data-ccode=' + ccode + ']').text();
           $('#btn_market').html(cname + ' <span class="caret"></span>');
           $('#btn_market').val(ccode);
