@@ -8,6 +8,7 @@
   <!-- <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
   <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
   <!-- <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" /> -->
+
   <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 
   <!-- Latest compiled and minified JavaScript -->
@@ -68,19 +69,21 @@
   <div class="container-fluid"><h3>총 {{total}}건</h3></div>
   <table class="table table-striped h1">
     <tr>
-      <th>상호</th>
-      <th>품종</th>
+      <th>경매시간</th>
+      <th>도매법인</th>
       <th>규격</th>
-      <th>등급</th>
-      <th>상한가</th>
+      <th>수량</th>
+      <th>가격</th>
+      <th>산지</th>
     </tr>
   {% for price in prices %}
     <tr>
+      <td>{{price.bidtime}}</td>
       <td>{{price.coname}}</td>
-      <td>{{price.sclassname}}</td>
       <td>{{price.unitname}}</td>
-      <td>{{price.gradename}}</td>
-      <td>{{price.maxprice}}</td>
+      <td>{{price.sumamt}}</td>
+      <td>{{price.price}}</td>
+      <td>{{price.sanji}}</td>
     </tr>
   {% endfor %}
   </table>

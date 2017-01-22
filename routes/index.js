@@ -13,10 +13,10 @@ router.get('/', function(req, res, next) {
   var date = req.query.date;
   var ccode = req.query.ccode;
   if (date && ccode) {
-    var url = 'http://openapi.okdab.com/price/inves/pricexml_search_wholesale.jsp?key=bd17a71eb528cb968408e3e620ae353e'
-      + '&sdate='+ date
-      + '&edate=' + date
-      + '&ccode=' + ccode + '&lcode=08&mcode=0804&scode=080413&snum=1&enum=50'; //설향 080413
+    var url = 'http://openapi.okdab.com/price/realtime/pricexml_search_action.jsp';
+    url += '?key=bd17a71eb528cb968408e3e620ae353e';
+    url += '&date='+ date;
+    url += '&ccode=' + ccode + '&lcode=08&mcode=0804&scode=080413'; //설향 080413
     httpget(url, function(err, data){
       try {
         var body = parser.toJson(data.body);
