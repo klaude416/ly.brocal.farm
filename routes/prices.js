@@ -15,7 +15,7 @@ router.get('/test', function(req, res, next) {
     } else {
       res.render('prices', { prices: []});
     }
-  });
+  });node 
 });
 
 router.post('/', function(req, res, next) {
@@ -28,7 +28,7 @@ router.post('/', function(req, res, next) {
     try {
       var body = parser.toJson(data.body);
       var json = JSON.parse(body);
-      var total = parseInt(json.price.totalcount);
+      // var total = parseInt(json.price.totalcount);
       res.send(json.price);
     } catch(e) {
       res.status(500).send({err: e});
